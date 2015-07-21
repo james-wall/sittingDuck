@@ -18,7 +18,7 @@
     <!-- Custom styles for this template -->
     <link href="modules/home/views/starter-template.css" rel="stylesheet">
     <!--<script src="js/ie-emulation-modes-warning.js"></script>-->
-
+    
   </head>
 
   <body>
@@ -117,54 +117,19 @@
         ?>
       </div>
       <div id="venues" class="tab-pane fade">
-        <?php
-          $user = 'root';
-          $password = '';
-          $con = 'sittingduckclients';
-          $connection = new mysqli('localhost', $user, $password, $con) or die("Unable to connect to the database because of ". mysqli_connect_error());
-          // Check connection
-          
-          if (mysqli_connect_errno())
-          {
-            echo "Failed to connect to MySQL: " . mysqli_connect_error();
-          }
-          $connection = new mysqli('localhost', $user, $password, $con) or die("Unable to connect to the database because of ". mysqli_connect_error());
-          $query = mysqli_query($connection,"SELECT * FROM venues");
-          echo"<div id='mainBody'>";
-          echo"\r\n <div align = center><h1>Current Sitting Duck Venue Information</h1></div>";
-          echo "\r\n <div align='center'><table border='1' style ='word-wrap:break-word'>
-              <tr>
-              <th>Venue ID</th>
-              <th>Venue Name</th>
-              <th>Manager Name</th>
-              <th>Contact Phone Number</th>
-              <th>Contact Email</th>
-              <th> Number of Mens Bathrooms</th>
-              <th> Number of Mens Units</th>
-              <th> Number of Womens Bathrooms</th>
-              <th> Number of Womens Units</th>
-              <th> Number of Unisex Bathrooms</th>
-              <th> Number of Unisex Units</th>
-              </tr>";
-          while($newRow=mysqli_fetch_array($query, MYSQLI_ASSOC))
-              {
-                echo "<tr>";
-                echo "<td>" . $newRow['id'] . "</td>";
-                echo "<td>" . $newRow['venName'] . "</td>";
-                echo "<td>" . $newRow['managerName'] . "</td>";
-                echo "<td>" . $newRow['contactPhoneNum'] . "</td>";
-                echo "<td>" . $newRow['contactEmail'] . "</td>";
-                echo "<td>" . $newRow['numBathMen'] . "</td>";
-                echo "<td>" . $newRow['numUnitsMen'] . "</td>"; 
-                echo "<td>" . $newRow['numBathWomen'] . "</td>";
-                echo "<td>" . $newRow['numUnitsWomen'] . "</td>"; 
-                echo "<td>" . $newRow['numBathUni'] . "</td>";
-                echo "<td>" . $newRow['numUnitsUni'] . "</td>"; 
-                echo "</tr>";
-              }
-              echo "</table>";
-              echo"</div>";
-              echo'<br>
+          <div id="tableHolder"></div>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                  drawTable();
+                });
+
+                function drawTable(){
+                    $('#tableHolder').load('/sittingDuckLogin/modules/home/views/send.php', function(){
+                    });
+                }
+            </script>
+            <div id='mainBody'>
+                  <br>
                   <div align="center" id="editVenues">
                       <fieldset style="width=30%"><legend>Edit Venues</legend>
                         <table border="0">
@@ -173,75 +138,183 @@
                           <form method="post">
                         </tr>
                         <tr>
-                          <td>Venue ID</td><td> <input name="idNum"></td>
+                          <td>Venue ID</td><td> <input name="idNum" id="idNum"></td>
                         </tr>
                         <tr>
-                          <td>Manager Name</td><td> <input name="manageName"></td>
+                          <td>Manager Name</td><td> <input name="manageName" id="manageName"></td>
                         </tr>
                         <tr>
-                          <td>Phone Number</td><td> <input type="text" name="phoneNum"></td>
+                          <td>Phone Number</td><td> <input type="text" name="phoneNum" id="phoneNum"></td>
                         </tr>
                         <tr>
-                          <td>Email</td><td> <input type="text" name="email"></td>
+                          <td>Email</td><td> <input type="text" name="email" id="email"></td>
                         </tr>
                         <tr>
-                        <td><input id="chngVen" type="submit" name = "submit" value="Update Info"></td>
+                        <td><input id="chngVen" type="submit" name = "chngVen" value="Update Info"></td>
                       </tr>
                       
                     </form>
                     </table>
                     </fieldset>
-                  </div>';
-              echo"</div>";
-              if(isset($_POST["submit"])){
-                $user = "root";
-                $password = "";
-                $con = "sittingduckclients";
-                $con = new mysqli("localhost", $user, $password, $con) or die("Unable to connect to the database because of ". mysqli_connect_error());
-                // Check connection
-                if (mysqli_connect_errno())
-                {
-                  echo "Failed to connect to MySQL: " . mysqli_connect_error();
-                }
-                $id = $_POST["idNum"];
-                $manageName = $_POST["manageName"];
-                $phoneNum = $_POST["phoneNum"];
-                $email = $_POST["email"];
-                $query = "UPDATE `sittingduckclients`.`venues` SET `managerName` = '".$manageName."', `contactPhoneNum` = '".$phoneNum."', `contactEmail` = '".$email."'' WHERE `venues`.`id` = '".$id."';";
-                echo "<script type='text/javascript'>alert('$query');</script>";
-                $sql = mysqli_query($con, "UPDATE `sittingduckclients`.`venues` SET `managerName` = '".$manageName."', `contactPhoneNum` = '".$phoneNum."', `contactEmail` = '".$email."'' WHERE `venues`.`id` = '".$id."';");        
-              } 
-        ?>
+                    <script src="/sittingDuckLogin/modules/home/views/chngVen.js"></script>
+                  </div>
+                  <br>
+                  <div align="center" id="signup">
+                    <fieldset style="width=30%"><legend>New Venue</legend>
+                      <table border="0">
+                      <tr>
+                        <!-- <form method="POST" action="connectivity-sign-up.php"> -->
+                        <form method="post">
+                      </tr>
+                    <tr>
+                        <td>Venue Name</td><td> <input id="venName"></td>
+                      </tr>
+                      <tr>
+                        <td>Venue Address</td><td> <input id="venAddress"></td>
+                      </tr>
+                      <tr>
+                        <td>Manager Name</td><td> <input id="newManageName"></td>
+                      </tr>
+                      <tr>
+                        <td>Phone Number</td><td> <input type="text" id="newPhoneNum"></td>
+                      </tr>
+                      <tr>
+                        <td>Email</td><td> <input type="text" id="newEmail"></td>
+                      </tr>
+                      <tr>
+                        <td>Number of Mens Bathrooms</td><td> <input id="numBathMen"></td>
+                      </tr>
+                      <tr>
+                        <td>Number of Mens Units</td><td> <input id="numUnitsMen"></td>
+                      </tr>
+                      <tr>
+                        <td>Number of Womens Bathrooms</td><td> <input id="numBathWomen"></td>
+                      </tr>
+                      <tr>
+                        <td>Number of Womens Units</td><td> <input id="numUnitsWomen"></td>
+                      </tr>
+                      <tr>
+                        <td>Number of Unisex Bathrooms</td><td> <input id="numBathUni"></td>
+                      </tr>
+                      <tr>
+                        <td> Number of Unisex Units</td><td> <input id="numUnitsUni"></td>
+                      </tr>
+                      <tr>
+                      <td><input id="newVen" type="submit" value="Add Venue"></td>
+                    </tr>
+                    
+                  </form>
+                  </table>
+                  </fieldset>
+                  <script src="/sittingDuckLogin/modules/home/views/newVen2.js"></script>
+                </div>
+                <br>
+                <div align="center" id="signup">
+                    <fieldset style="width=30%"><legend>Remove Venue</legend>
+                      <table border="0">
+                      <tr>
+                        <!-- <form method="POST" action="connectivity-sign-up.php"> -->
+                        <form method="post">
+                      </tr>
+                    <tr>
+                        <td>Venue ID</td><td> <input id="venID"></td>
+                      </tr>
+                      <tr>
+                      <td><input id="delVen" type="submit" value="Remove Venue"></td>
+                    </tr>
+                    
+                  </form>
+                  </table>
+                  </fieldset>
+                  <script src="/sittingDuckLogin/modules/home/views/delVen3.js"></script>
+                </div>
+              </div>
       </div>
       <div id="clients" class="tab-pane fade">
-        <?php
-            $user = 'root';
-            $password = '';
-            $con = 'sittingduckclients';
-            $connection = new mysqli('localhost', $user, $password, $con) or die("Unable to connect to the database because of ". mysqli_connect_error());
-            $query = mysqli_query($connection,"SELECT * FROM clients");
-            echo"<div id='mainBody2'>";
-            echo"\r\n <div align = center><h1>Current Sitting Duck Client Information</h1></div>";
-            echo "\r\n <div align='center'><table border='1' style ='word-wrap:break-word'>
-                <tr>
-                <th>Client ID</th>
-                <th>Client Name</th>
-                <th>Contact Name</th>
-                <th>Contact Phone Number</th>
-                </tr>";
-            while($newRow=mysqli_fetch_array($query, MYSQLI_ASSOC))
-                {
-                  echo "<tr>";
-                  echo "<td>" . $newRow['id'] . "</td>";
-                  echo "<td>" . $newRow['clientName'] . "</td>";
-                  echo "<td>" . $newRow['contactName'] . "</td>";
-                  echo "<td>" . $newRow['contactPhoneNum'] . "</td>";
-                  echo "</tr>";
+        <div align = center><h1>Current Sitting Duck Client Information</h1></div>
+        <div class = "starter-template" id="tableHolder2"></div>
+        <script type="text/javascript">
+                $(document).ready(function(){
+                  refreshTable();
+                });
+
+                function refreshTable(){
+                    $('#tableHolder2').load('/sittingDuckLogin/modules/home/views/clientSend.php', function(){
+                    });
                 }
-                echo "</table>";
-                echo"</div>";
-                echo"</div>";
-          ?>
+            </script>
+            
+                <div align="center" id="signup">
+                    <fieldset style="width=30%"><legend>Edit Clients</legend>
+                      <table border="0">
+                      <tr>
+                        <!-- <form method="POST" action="connectivity-sign-up.php"> -->
+                        <form method="post">
+                      </tr>
+                      <tr>
+                        <td>ID Number</td><td> <input type="text" id="cliIDNum"></td>
+                      </tr>
+                      <tr>
+                        <td>Contact Name</td><td> <input id="cliContactName"></td>
+                      </tr>
+                      <tr>
+                        <td>Phone Number</td><td> <input type="text" id="cliPhoneNum"></td>
+                      </tr>
+                      <tr>
+                      <td><input id="chngClient" type="submit" value="Update Info"></td>
+                    </tr>
+                    
+                  </form>
+                  </table>
+                  </fieldset>
+                  <script src="/sittingDuckLogin/modules/home/views/chngClient3.js"></script>
+                </div>
+                <br>
+                <div align="center" id="signup">
+                    <fieldset style="width=30%"><legend>New Client</legend>
+                      <table border="0">
+                      <tr>
+                        <!-- <form method="POST" action="connectivity-sign-up.php"> -->
+                        <form method="post">
+                      </tr>
+                      <tr>
+                        <td>Client Name</td><td> <input id="newClientName"></td>
+                      </tr>
+                      <tr>
+                        <td>Contact Name</td><td> <input id="newContactName"></td>
+                      </tr>
+                      <tr>
+                        <td>Phone Number</td><td> <input type="text" id="newCliPhoneNum"></td>
+                      <tr>
+                      <td><input id="newClient" type="submit" value="Add New Client"></td>
+                    </tr>
+                    
+                  </form>
+                  </table>
+                  </fieldset>
+                  <script src="/sittingDuckLogin/modules/home/views/newClient.js"></script>
+                </div>
+                <br>
+                <div align="center" id="signup">
+                    <fieldset style="width=30%"><legend>Remove Client</legend>
+                      <table border="0">
+                      <tr>
+                        <!-- <form method="POST" action="connectivity-sign-up.php"> -->
+                        <form method="post">
+                      </tr>
+                    <tr>
+                        <td>Venue ID</td><td> <input id="delClientID"></td>
+                      </tr>
+                      <tr>
+                      <td><input id="delCli" type="submit" value="Remove Client"></td>
+                    </tr>
+                    
+                  </form>
+                  </table>
+                  </fieldset>
+                  <script src="/sittingDuckLogin/modules/home/views/delClient.js"></script>
+                </div>
+                </div>
       </div>
       <div id="units" class="tab-pane fade">
         <h3>Menu 3</h3>

@@ -81,7 +81,7 @@
     } 
 
 ?>
-  <table>
+  </table>
   </fieldset>
 
 </div>
@@ -127,7 +127,7 @@
     } 
 
 ?>
-  <table>
+  </table>
   </fieldset>
 </div>
 <div align="center" id="signup">
@@ -165,7 +165,7 @@
     } 
 
 ?>
-  <table>
+  </table>
   </fieldset>
 </div>
 <div align = "left">

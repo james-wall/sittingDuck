@@ -190,7 +190,7 @@
     } 
 
 ?>
-  <table>
+  </table>
   </fieldset>
 </div>
 <br>
@@ -229,7 +229,7 @@
     } 
 
 ?>
-  <table>
+  </table>
   </fieldset>
 </div>
 
