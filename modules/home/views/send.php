@@ -44,5 +44,4 @@
       }
       echo "</table>";
       echo"</div>";
-      echo'<script type="text/javascript">console.log("here4");</script>';
 ?>
