@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,9 +67,12 @@
                   <td>Password</td><td> <input type="password" id="password"></td>
                 </tr>
                 <tr>
+                  <td>Affiliated Company</td><td> <input type="text" id="affiliation"></td>
+                </tr>
+                <tr>
                   <select id="accountType">
-                    <option value="reg">Sitting Duck Standard</option>
-                    <option value="plus">Sitting Duck Pro</option>
+                    <option value="client">Sitting Duck Client</option>
+                    <option value="venue">Sitting Duck Venue</option>
                     <option value="admin">Sitting Duck Administrator</option>
                   </select>
                 </tr>
@@ -303,7 +305,6 @@
   </div>
   <div class="container">
   </div><!-- /.container -->
-  <br>
   <div align = "left">
     <p><a href="/sittingDuckLogin/index.html">Logout</a></p>
   </div>

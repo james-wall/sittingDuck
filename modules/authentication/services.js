@@ -24,7 +24,7 @@ angular.module('Authentication')
              ----------------------------------------------*/
             $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded;charset=utf-8";
              //from http://stackoverflow.com/questions/29268425/not-sure-what-angularjs-http-post-is-expecting-from-php
-            $http.post('/sittingDuckLogin/connect.php', { 'Myusername': username, 'Mypassword': password}) 
+            $http.post('/sittingDuckLogin/connect2.php', { 'Myusername': username, 'Mypassword': password}) 
                .success(function (response) {
 
                     if(response){
