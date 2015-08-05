@@ -6,11 +6,6 @@ $db = 'sittingduckclients';
 
 $db = new mysqli('localhost', $user, $password, $db) or die("Unable to connect to the database because of ". mysqli_connect_error());
 
-//echo"You've connected!!";
-// if($_SESSION['username']){
-//   header('Location: /sittingDuckLogin/modules/home/views/home.php');
-  
-// }
 $data = json_decode( file_get_contents('php://input'));
 $username = $data->Myusername;
 $userpassword = $data->Mypassword;
@@ -52,7 +47,6 @@ if (isset($data->Myusername)) {
     {
       echo"<script>alert('Incorrect Login Credentials. Please try again.');</script>";
       echo"<script>window.location.replace('/sittingDuckLogin/index.html'); </script>";
-      //echo $response = null;
     }
 
   } else {
